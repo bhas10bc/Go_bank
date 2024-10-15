@@ -1,0 +1,47 @@
+version: "3.8"
+
+services:
+  go_bank_1:
+    build: .
+    container_name: go_bank_container_1
+    environment:
+      DATABASE_URL: "user=postgres dbname=postgres password=gobank host=postgres sslmode=disable"
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+
+  go_bank_2:
+    build: .
+    container_name: go_bank_container_2
+    environment:
+      DATABASE_URL: "user=postgres dbname=postgres password=gobank host=postgres sslmode=disable"
+    depends_on:
+      - postgres
+    ports:
+      - "8081:8080"
+
+  go_bank_3:
+    build: .
+    container_name: go_bank_container_3
+    environment:
+      DATABASE_URL: "user=postgres dbname=postgres password=gobank host=postgres sslmode=disable"
+    depends_on:
+      - postgres
+    ports:
+      - "8082:8080"
+
+  postgres:
+    image: postgres:17
+    container_name: go_bank_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: gobank
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
